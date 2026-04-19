@@ -1,0 +1,262 @@
+local Tab1 = Window:CreateTab("Reset", 4483362458)
+
+local AutoRebirth = false
+local RebirthDelay = 5
+
+Tab1:CreateToggle({
+    Name = "Auto Rebirth",
+    CurrentValue = false,
+    Callback = function(Value)
+        AutoRebirth = Value
+        while AutoRebirth do
+            local args = { "Rebirth" }
+            game:GetService("ReplicatedStorage")
+                :WaitForChild("Objects")
+                :WaitForChild("Remotes")
+                :WaitForChild("Prestige")
+                :WaitForChild("DoPrestige")
+                :FireServer(unpack(args))
+            task.wait(RebirthDelay)
+        end
+    end
+})
+
+Tab1:CreateSlider({
+    Name = "Rebirth Speed",
+    Range = {0.1, 600},
+    Increment = 0.1,
+    CurrentValue = 10,
+    Callback = function(Value)
+        RebirthDelay = Value
+    end
+})
+
+-- Auto Ascension
+local AutoAscension = false
+local AscensionDelay = 5
+
+Tab1:CreateToggle({
+    Name = "Auto Ascension",
+    CurrentValue = false,
+    Callback = function(Value)
+        AutoAscension = Value
+        while AutoAscension do
+            local args = { "Ascension" }
+            game:GetService("ReplicatedStorage")
+                :WaitForChild("Objects")
+                :WaitForChild("Remotes")
+                :WaitForChild("Prestige")
+                :WaitForChild("DoPrestige")
+                :FireServer(unpack(args))
+            task.wait(AscensionDelay)
+        end
+    end
+})
+
+Tab1:CreateSlider({
+    Name = "Ascension Delay",
+    Range = {0.1, 600},
+    Increment = 0.1,
+    CurrentValue = 10,
+    Callback = function(Value)
+        AscensionDelay = Value
+    end
+})
+
+-- Auto Transcension
+local AutoTranscension = false
+local TranscensionDelay = 5
+
+Tab1:CreateToggle({
+    Name = "Auto Transcension",
+    CurrentValue = false,
+    Callback = function(Value)
+        AutoTranscension = Value
+        while AutoTranscension do
+            local args = { "Transcension" }
+            game:GetService("ReplicatedStorage")
+                :WaitForChild("Objects")
+                :WaitForChild("Remotes")
+                :WaitForChild("Prestige")
+                :WaitForChild("DoPrestige")
+                :FireServer(unpack(args))
+            task.wait(TranscensionDelay)
+        end
+    end
+})
+
+Tab1:CreateSlider({
+    Name = "Transcension Delay",
+    Range = {0.1, 600},
+    Increment = 0.1,
+    CurrentValue = 10,
+    Callback = function(Value)
+        TranscensionDelay = Value
+    end
+})
+
+local Tab2 = Window:CreateTab("Upgrades", 4483362458)
+
+-- Normal upgrades (NumMulti_XXX)
+local AutoUpgrade = false
+
+Tab2:CreateToggle({
+    Name = "Auto Upgrades (Smart MAX Detect)",
+    CurrentValue = false,
+    Callback = function(Value)
+        AutoUpgrade = Value
+        while AutoUpgrade do
+            for i = 1, 500 do
+                local id = "NumMulti_" .. string.format("%03d", i)
+                local upgradeModel = workspace:FindFirstChild("UpgradeModels")
+                if upgradeModel and upgradeModel:FindFirstChild(id) then
+                    local obj = upgradeModel[id]
+                    local label = obj.Display.SurfaceGui.Frame.Frame:FindFirstChild("CostLabel")
+                    if label and label:IsA("TextLabel") then
+                        if not string.find(label.Text, "%[MAX%]") then
+                            local args = { id }
+                            game:GetService("ReplicatedStorage")
+                                :WaitForChild("Objects")
+                                :WaitForChild("Remotes")
+                                :WaitForChild("Upgrades")
+                                :WaitForChild("BuyUpgrade")
+                                :FireServer(unpack(args))
+                        end
+                    end
+                end
+            end
+            task.wait(0.1)
+        end
+    end
+})
+
+local AutoAscensionUpgrades = false
+
+local AscensionUpgradeIDs = {
+    "AscensionNumberMulti",
+    "AscensionWalkspeedAdd",
+    "AscensionRebirthMulti",
+    "AscensionNumberMulti2",
+    "AscensionRuneLuckAdd"
+}
+
+Tab2:CreateToggle({
+    Name = "Auto Ascension Upgrades",
+    CurrentValue = false,
+    Callback = function(Value)
+        AutoAscensionUpgrades = Value
+        while AutoAscensionUpgrades do
+            for _, upgradeID in ipairs(AscensionUpgradeIDs) do
+                local args = { upgradeID }
+                game:GetService("ReplicatedStorage")
+                    :WaitForChild("Objects")
+                    :WaitForChild("Remotes")
+                    :WaitForChild("Upgrades")
+                    :WaitForChild("BuyUpgrade")
+                    :FireServer(unpack(args))
+                task.wait(0.1)
+            end
+            task.wait(1)
+        end
+    end
+})
+
+local AutoRebirthUpgrades = false
+
+local RebirthUpgradeIDs = {
+    "RebirthRuneLuckAdd",
+    "RebirthNumberMulti2",
+    "RebirthGainMulti",
+    "RebirthWalkspeedAdd",
+    "RebirthNumberMulti"
+}
+
+Tab2:CreateToggle({
+    Name = "Auto Rebirth Upgrades",
+    CurrentValue = false,
+    Callback = function(Value)
+        AutoRebirthUpgrades = Value
+        while AutoRebirthUpgrades do
+            for _, upgradeID in ipairs(RebirthUpgradeIDs) do
+                local args = { upgradeID }
+                game:GetService("ReplicatedStorage")
+                    :WaitForChild("Objects")
+                    :WaitForChild("Remotes")
+                    :WaitForChild("Upgrades")
+                    :WaitForChild("BuyUpgrade")
+                    :FireServer(unpack(args))
+                task.wait(0.1)
+            end
+            task.wait(1)
+        end
+    end
+})
+
+local AutoTranscensionUpgrades = false
+
+local TranscensionUpgradeIDs = {
+    "TranscensionRuneLuckAdd",
+    "TranscensionAscensionMulti",
+    "TranscensionRebirthMulti",
+    "TranscensionNumberMulti",
+    "TranscensionTeleportUnlock"
+}
+
+Tab2:CreateToggle({
+    Name = "Auto Transcension Upgrades",
+    CurrentValue = false,
+    Callback = function(Value)
+        AutoTranscensionUpgrades = Value
+        while AutoTranscensionUpgrades do
+            for _, upgradeID in ipairs(TranscensionUpgradeIDs) do
+                local args = { upgradeID }
+                game:GetService("ReplicatedStorage")
+                    :WaitForChild("Objects")
+                    :WaitForChild("Remotes")
+                    :WaitForChild("Upgrades")
+                    :WaitForChild("BuyUpgrade")
+                    :FireServer(unpack(args))
+                task.wait(0.1)
+            end
+            task.wait(1)
+        end
+    end
+})
+
+-- ================= TAB 3 (TELEPORT) =================
+local Tab3 = Window:CreateTab("Teleport", 4483362458)
+
+-- Helper function to teleport player
+local function teleportTo(cframe)
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    if character then
+        local hrp = character:FindFirstChild("HumanoidRootPart")
+        if hrp then
+            hrp.CFrame = cframe
+        end
+    end
+end
+
+-- Define locations from given data
+local locations = {
+    Transcension = CFrame.new(-29, 74.9500122, -779, 1, 0, 0, 0, 1, 0, 0, 0, 1),
+    Ascension    = CFrame.new(-29, 74.9500122, -407, 1, 0, 0, 0, 1, 0, 0, 0, 1),
+    Rebirth      = CFrame.new(-29, 74.9500122, -107, 1, 0, 0, 0, 1, 0, 0, 0, 1),
+    Gems         = CFrame.new(42.9615326, 74.7692261, -647, -1, 0, 0, 0, 1, 0, 0, 0, -1),
+    Challenges   = CFrame.new(23.4615326, 74.7692261, -528.5, -1, 0, 0, 0, 1, 0, 0, 0, -1),
+    Runes        = CFrame.new(48, 75.2384644, -255, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+}
+
+-- Create a button for each location
+for name, cframe in pairs(locations) do
+    Tab3:CreateButton({
+        Name = name,
+        Callback = function()
+            teleportTo(cframe)
+            Rayfield:Notify("Teleported to " .. name, "Info")
+        end
+    })
+end
+
+Tab3:CreateLabel("Click any button to teleport instantly")
