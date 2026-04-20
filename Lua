@@ -101,7 +101,7 @@ local Tab2 = Window:CreateTab("Upgrades", 4483362458)
 local AutoUpgrade = false
 
 Tab2:CreateToggle({
-    Name = "Auto Upgrades (Smart MAX Detect)",
+    Name = "Auto Upgrades",
     CurrentValue = false,
     Callback = function(Value)
         AutoUpgrade = Value
