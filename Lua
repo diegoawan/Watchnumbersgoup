@@ -63,7 +63,6 @@ Tab1:CreateSlider({
     end
 })
 
--- Auto Transcension
 local AutoTranscension = false
 local TranscensionDelay = 5
 
@@ -97,7 +96,6 @@ Tab1:CreateSlider({
 
 local Tab2 = Window:CreateTab("Upgrades", 4483362458)
 
--- Normal upgrades (NumMulti_XXX)
 local AutoUpgrade = false
 
 Tab2:CreateToggle({
@@ -223,10 +221,8 @@ Tab2:CreateToggle({
     end
 })
 
--- ================= TAB 3 (TELEPORT) =================
 local Tab3 = Window:CreateTab("Teleport", 4483362458)
 
--- Helper function to teleport player
 local function teleportTo(cframe)
     local player = game.Players.LocalPlayer
     local character = player.Character
@@ -238,7 +234,6 @@ local function teleportTo(cframe)
     end
 end
 
--- Define locations from given data
 local locations = {
     Transcension = CFrame.new(-29, 74.9500122, -779, 1, 0, 0, 0, 1, 0, 0, 0, 1),
     Ascension    = CFrame.new(-29, 74.9500122, -407, 1, 0, 0, 0, 1, 0, 0, 0, 1),
@@ -248,7 +243,6 @@ local locations = {
     Runes        = CFrame.new(48, 75.2384644, -255, -1, 0, 0, 0, 1, 0, 0, 0, -1)
 }
 
--- Create a button for each location
 for name, cframe in pairs(locations) do
     Tab3:CreateButton({
         Name = name,
